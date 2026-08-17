@@ -1,0 +1,618 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>BugTracker | Dashboard</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <aside class="sidebar">
+
+        <div class="logo">
+            <div class="logo-icon">🐞</div>
+
+            <div>
+                <h2>BugTracker</h2>
+                <span>Issue Management</span>
+            </div>
+        </div>
+
+        <nav class="sidebar-nav">
+
+            <p class="nav-title">MAIN</p>
+
+            <a href="#" class="nav-link active">
+                <span>▦</span>
+                Dashboard
+            </a>
+
+            <a href="#" class="nav-link">
+                <span>☷</span>
+                All Bugs
+            </a>
+
+            <a href="#" class="nav-link" id="sidebarCreateBug">
+                <span>＋</span>
+                Create Bug
+            </a>
+
+            <p class="nav-title">MANAGEMENT</p>
+
+            <a href="#" class="nav-link" id="sidebarTimeline">
+                <span>◷</span>
+                Timeline
+            </a>
+
+            <a href="#" class="nav-link">
+                <span>⚙</span>
+                Settings
+            </a>
+
+        </nav>
+
+        <div class="sidebar-footer">
+
+            <div class="user-mini">
+
+                <div class="avatar">
+                    K
+                </div>
+
+                <div>
+                    <strong>Kawin</strong>
+                    <span>Developer</span>
+                </div>
+
+            </div>
+
+        </div>
+
+    </aside>
+
+
+    <main class="main-content">
+
+        <header class="top-header">
+
+            <div class="page-heading">
+
+                <div>
+                    <h1>Dashboard</h1>
+                    <p>Monitor and manage your application issues</p>
+                </div>
+
+            </div>
+
+            <div class="header-actions">
+
+                <button class="icon-button" title="Notifications">
+                    🔔
+                </button>
+
+                <div class="profile">
+
+                    <div class="avatar">
+                        K
+                    </div>
+
+                    <div class="profile-info">
+                        <strong>Kawin</strong>
+                        <span>Developer</span>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </header>
+
+
+        <section class="dashboard-content">
+
+            <div class="welcome-section">
+
+                <div>
+                    <h2>Good morning, Kawin 👋</h2>
+                    <p>Here's an overview of your bug tracking activity.</p>
+                </div>
+
+                <button class="primary-button" id="createBugButton">
+                    <span>＋</span>
+                    Create Bug
+                </button>
+
+            </div>
+
+
+            <div class="stats-grid">
+
+                <div class="stat-card">
+
+                    <div class="stat-icon total-icon">
+                        ☷
+                    </div>
+
+                    <div class="stat-details">
+                        <span>Total Bugs</span>
+                        <strong id="totalBugs">0</strong>
+                    </div>
+
+                </div>
+
+
+                <div class="stat-card">
+
+                    <div class="stat-icon open-icon">
+                        ◉
+                    </div>
+
+                    <div class="stat-details">
+                        <span>Open</span>
+                        <strong id="openBugs">0</strong>
+                    </div>
+
+                </div>
+
+
+                <div class="stat-card">
+
+                    <div class="stat-icon progress-icon">
+                        ◔
+                    </div>
+
+                    <div class="stat-details">
+                        <span>In Progress</span>
+                        <strong id="progressBugs">0</strong>
+                    </div>
+
+                </div>
+
+
+                <div class="stat-card">
+
+                    <div class="stat-icon resolved-icon">
+                        ✓
+                    </div>
+
+                    <div class="stat-details">
+                        <span>Resolved</span>
+                        <strong id="resolvedBugs">0</strong>
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <section class="bug-panel">
+
+                <div class="panel-header">
+
+                    <div>
+                        <h2>Recent Bugs</h2>
+                        <p>Track and manage reported issues</p>
+                    </div>
+
+                    <button class="secondary-button" id="refreshButton">
+                        ↻ Refresh
+                    </button>
+
+                </div>
+
+
+                <div class="toolbar">
+
+                    <div class="search-box">
+
+                        <span>⌕</span>
+
+                        <input
+                            type="text"
+                            id="searchInput"
+                            placeholder="Search bugs..."
+                        >
+
+                    </div>
+
+
+                    <select id="statusFilter">
+
+                        <option value="">All Status</option>
+                        <option value="OPEN">Open</option>
+                        <option value="IN_PROGRESS">In Progress</option>
+                        <option value="RESOLVED">Resolved</option>
+
+                    </select>
+
+
+                    <select id="priorityFilter">
+
+                        <option value="">All Priority</option>
+                        <option value="CRITICAL">Critical</option>
+                        <option value="HIGH">High</option>
+                        <option value="MEDIUM">Medium</option>
+                        <option value="LOW">Low</option>
+
+                    </select>
+
+                </div>
+
+
+                <div class="table-wrapper">
+
+                    <table>
+
+                        <thead>
+
+                            <tr>
+                                <th>ID</th>
+                                <th>Bug</th>
+                                <th>Priority</th>
+                                <th>Status</th>
+                                <th>Assigned To</th>
+                                <th>Actions</th>
+                            </tr>
+
+                        </thead>
+
+                        <tbody id="bugTableBody">
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+
+                <div class="empty-state" id="emptyState">
+
+                    <div class="empty-icon">
+                        🐞
+                    </div>
+
+                    <h3>No bugs found</h3>
+
+                    <p>
+                        There are no bugs matching your current filters.
+                    </p>
+
+                </div>
+
+            </section>
+
+        </section>
+
+    </main>
+
+
+    <!-- CREATE / EDIT BUG MODAL -->
+
+    <div class="modal-overlay" id="bugModal">
+
+        <div class="modal">
+
+            <div class="modal-header">
+
+                <div>
+                    <h2 id="bugModalTitle">Create New Bug</h2>
+
+                    <p id="bugModalSubtitle">
+                        Report a new issue to the development team.
+                    </p>
+                </div>
+
+                <button class="close-button" id="closeModal">
+                    ×
+                </button>
+
+            </div>
+
+
+            <form id="bugForm">
+
+                <div class="form-group">
+
+                    <label for="bugTitle">
+                        Bug Title
+                    </label>
+
+                    <input
+                        type="text"
+                        id="bugTitle"
+                        placeholder="Enter bug title"
+                        required
+                    >
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label for="bugDescription">
+                        Description
+                    </label>
+
+                    <textarea
+                        id="bugDescription"
+                        placeholder="Describe the issue..."
+                        rows="5"
+                        required
+                    ></textarea>
+
+                </div>
+
+
+                <div class="form-row">
+
+                    <div class="form-group">
+
+                        <label for="bugPriority">
+                            Priority
+                        </label>
+
+                        <select id="bugPriority">
+
+                            <option value="LOW">Low</option>
+                            <option value="MEDIUM">Medium</option>
+                            <option value="HIGH">High</option>
+                            <option value="CRITICAL">Critical</option>
+
+                        </select>
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="bugStatus">
+                            Status
+                        </label>
+
+                        <select id="bugStatus">
+
+                            <option value="OPEN">Open</option>
+                            <option value="IN_PROGRESS">In Progress</option>
+                            <option value="RESOLVED">Resolved</option>
+
+                        </select>
+
+                    </div>
+
+                </div>
+
+
+                <div class="modal-actions">
+
+                    <button
+                        type="button"
+                        class="secondary-button"
+                        id="cancelButton"
+                    >
+                        Cancel
+                    </button>
+
+                    <button
+                        type="submit"
+                        class="primary-button"
+                        id="saveBugButton"
+                    >
+                        Create Bug
+                    </button>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+
+    <!-- ASSIGN BUG MODAL -->
+
+    <div class="modal-overlay" id="assignModal">
+
+        <div class="modal">
+
+            <div class="modal-header">
+
+                <div>
+
+                    <h2>Assign Bug</h2>
+
+                    <p id="assignBugSubtitle">
+                        Assign this bug to a developer.
+                    </p>
+
+                </div>
+
+                <button class="close-button" id="closeAssignModal">
+                    ×
+                </button>
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label for="userSelect">
+                    Select Developer
+                </label>
+
+                <select id="userSelect">
+
+                    <option value="">
+                        Select a user
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <div class="modal-actions">
+
+                <button
+                    type="button"
+                    class="secondary-button"
+                    id="cancelAssignButton"
+                >
+                    Cancel
+                </button>
+
+                <button
+                    type="button"
+                    class="primary-button"
+                    id="confirmAssignButton"
+                >
+                    Assign Bug
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- BUG DETAILS / TIMELINE MODAL -->
+
+    <div class="modal-overlay" id="timelineModal">
+
+        <div class="modal timeline-modal">
+
+            <div class="modal-header">
+
+                <div>
+
+                    <h2 id="timelineBugTitle">
+                        Bug Details
+                    </h2>
+
+                    <p id="timelineBugId">
+                        Bug #0
+                    </p>
+
+                </div>
+
+                <button
+                    class="close-button"
+                    id="closeTimelineModal"
+                >
+                    ×
+                </button>
+
+            </div>
+
+
+            <div class="bug-details">
+
+                <div class="detail-section">
+
+                    <h3>Description</h3>
+
+                    <p id="timelineDescription">
+                    </p>
+
+                </div>
+
+
+                <div class="detail-grid">
+
+                    <div class="detail-box">
+
+                        <span>Priority</span>
+
+                        <strong id="timelinePriority">
+                        </strong>
+
+                    </div>
+
+
+                    <div class="detail-box">
+
+                        <span>Status</span>
+
+                        <strong id="timelineStatus">
+                        </strong>
+
+                    </div>
+
+
+                    <div class="detail-box">
+
+                        <span>Assigned To</span>
+
+                        <strong id="timelineAssigned">
+                        </strong>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="timeline-section">
+
+                <div class="timeline-heading">
+
+                    <div>
+
+                        <h3>Bug Timeline</h3>
+
+                        <p>Complete history of this bug</p>
+
+                    </div>
+
+                </div>
+
+
+                <div
+                    id="timelineContainer"
+                    class="timeline-container"
+                >
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- TOAST -->
+
+    <div class="toast" id="toast">
+
+        <span class="toast-icon">
+            ✓
+        </span>
+
+        <div>
+
+            <strong id="toastTitle">
+                Success
+            </strong>
+
+            <p id="toastMessage">
+                Operation completed successfully.
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <script src="script.js"></script>
+
+</body>
+
+</html>
+```
